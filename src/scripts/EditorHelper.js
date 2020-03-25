@@ -1,41 +1,46 @@
-import { Editor, Transforms, Text } from 'slate'
+import { Editor, Transforms } from 'slate'
 
 // Define our own custom set of helpers.
-const CustomEditor = {
-  isBoldMarkActive(editor) {
-    const [match] = Editor.nodes(editor, {
-      match: n => n.bold === true,
-      universal: true,
-    })
 
-    return !!match
-  },
+const LIST_TYPES = ['numbered-list', 'bulleted-list'];
+export const toggleBlock = (editor, format) => {
+  const isActive = isBlockActive(editor, format)
+  const isList = LIST_TYPES.includes(format)
 
-  isCodeBlockActive(editor) {
-    const [match] = Editor.nodes(editor, {
-      match: n => n.type === 'code',
-    })
+  Transforms.unwrapNodes(editor, {
+    match: n => LIST_TYPES.includes(n.type),
+    split: true,
+  })
 
-    return !!match
-  },
+  Transforms.setNodes(editor, {
+    type: isActive ? 'paragraph' : isList ? 'list-item' : format,
+  })
 
-  toggleBoldMark(editor) {
-    const isActive = CustomEditor.isBoldMarkActive(editor)
-    Transforms.setNodes(
-      editor,
-      { bold: isActive ? null : true },
-      { match: n => Text.isText(n), split: true }
-    )
-  },
+  if (!isActive && isList) {
+    const block = { type: format, children: [] }
+    Transforms.wrapNodes(editor, block)
+  }
+}
 
-  toggleCodeBlock(editor) {
-    const isActive = CustomEditor.isCodeBlockActive(editor)
-    Transforms.setNodes(
-      editor,
-      { type: isActive ? null : 'code' },
-      { match: n => Editor.isBlock(editor, n) }
-    )
-  },
-};
+export const toggleMark = (editor, format) => {
+  const isActive = isMarkActive(editor, format)
 
-export default CustomEditor;
+  if (isActive) {
+    Editor.removeMark(editor, format)
+  } else {
+    Editor.addMark(editor, format, true)
+  }
+}
+
+export const isBlockActive = (editor, format) => {
+  const [match] = Editor.nodes(editor, {
+    match: n => n.type === format,
+  })
+
+  return !!match
+}
+
+export const isMarkActive = (editor, format) => {
+  const marks = Editor.marks(editor)
+  return marks ? marks[format] === true : false
+}
