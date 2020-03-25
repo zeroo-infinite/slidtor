@@ -2,7 +2,7 @@ import React from 'react'
 import { useSlate } from 'slate-react'
 
 import { Button, Icon, Toolbar } from './editorComponent'
-import { toggleBlock, toggleMark, isBlockActive, isMarkActive } from '../scripts/EditorHelper'
+import { toggleBlock, toggleMark, isBlockActive, isMarkActive, insertImage } from '../scripts/EditorHelper'
 
 
 export const ToolbarMenu = () => {
@@ -17,6 +17,7 @@ export const ToolbarMenu = () => {
       <BlockButton format="block-quote" icon="format_quote" />
       <BlockButton format="numbered-list" icon="format_list_numbered" />
       <BlockButton format="bulleted-list" icon="format_list_bulleted" />
+      <ImageButton format="image" icon="image" />
     </Toolbar>
   )
 }
@@ -44,6 +45,23 @@ const MarkButton = ({ format, icon }) => {
       onMouseDown={event => {
         event.preventDefault()
         toggleMark(editor, format)
+      }}
+    >
+      <Icon>{icon}</Icon>
+    </Button>
+  )
+}
+
+const ImageButton = ({ format, icon }) => {
+  const editor = useSlate()
+  return (
+    <Button
+      active={isMarkActive(editor, format)}
+      onMouseDown={event => {
+        event.preventDefault()
+        const url = window.prompt('Enter the URL of the image:')
+        if (!url) return
+        insertImage(editor, url)
       }}
     >
       <Icon>{icon}</Icon>
