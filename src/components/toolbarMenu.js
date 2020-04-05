@@ -2,12 +2,13 @@ import React from 'react'
 import { useSlate } from 'slate-react'
 
 import { Button, Icon, Toolbar } from './editorComponent'
-import { toggleBlock, toggleMark, isBlockActive, isMarkActive, insertImage } from '../scripts/EditorHelper'
+import { toggleBlock, toggleMark, isBlockActive, isMarkActive } from '../scripts/EditorHelper'
+import { insertImage } from '../plugins/image'
 
 
 export const ToolbarMenu = () => {
   return (
-    <Toolbar>
+    <Toolbar className='toolbar'>
       <MarkButton format="bold" icon="format_bold" />
       <MarkButton format="italic" icon="format_italic" />
       <MarkButton format="underline" icon="format_underlined" />

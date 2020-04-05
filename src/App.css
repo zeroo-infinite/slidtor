@@ -36,3 +36,17 @@
     transform: rotate(360deg);
   }
 }
+
+.toolbar{
+  color: #dddddd !important;
+}
+
+/* img { */
+  /* vertical-align: top;  */
+  /* vertical-align: text-top; */
+  /* vertical-align: -moz-middle-with-baseline; */
+  /* vertical-align: unset; */
+  /* vertical-align: initial */
+  /* float: left; */
+  /* float: right; */
+/* } */

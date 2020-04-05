@@ -1,6 +1,4 @@
 import { Editor, Transforms } from 'slate'
-import imageExtensions from 'image-extensions'
-import isUrl from 'is-url'
 
 // Define our own custom set of helpers.
 
@@ -45,17 +43,4 @@ export const isBlockActive = (editor, format) => {
 export const isMarkActive = (editor, format) => {
   const marks = Editor.marks(editor)
   return marks ? marks[format] === true : false
-}
-
-export const insertImage = (editor, url) => {
-  const text = { text: '' }
-  const image = { type: 'image', url, children: [text] }
-  Transforms.insertNodes(editor, image)
-}
-
-export const isImageUrl = url => {
-  if (!url) return false
-  if (!isUrl(url)) return false
-  const ext = new URL(url).pathname.split('.').pop()
-  return imageExtensions.includes(ext)
 }

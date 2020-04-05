@@ -1,12 +1,12 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import isHotkey from 'is-hotkey'
-import { Editable, withReact, Slate, useSelected, useFocused } from 'slate-react'
+import { Editable, withReact, Slate } from 'slate-react'
 import { createEditor } from 'slate'
 import { withHistory } from 'slate-history'
-import { css } from 'emotion'
 
 import { ToolbarMenu } from './toolbarMenu'
-import { toggleMark, insertImage, isImageUrl } from '../scripts/EditorHelper'
+import { toggleMark } from '../scripts/EditorHelper'
+import { withImages, ImageNode } from '../plugins/image'
 
 const HOTKEYS = {
   'mod+b': 'bold',
@@ -19,7 +19,10 @@ const TextEditor = () => {
   const [value, setValue] = useState(initialValue)
   const renderElement = useCallback(props => <Element {...props} />, [])
   const renderLeaf = useCallback(props => <Leaf {...props} />, [])
-  const editor = useMemo(() => withImages(withHistory(withReact(createEditor()))), [])
+  const editor = useMemo(
+    () => withImages(withHistory(withReact(createEditor()))), 
+    []
+  )
 
   return (
     <Slate editor={editor} value={value} onChange={value => setValue(value)}>
@@ -61,7 +64,7 @@ const Element = props => {
     case 'heading-two':
       return <h2 {...attributes}>{children}</h2>
     case 'image':
-      return <ImageElement {...props} />
+      return <ImageNode {...props} />
     case 'list-item':
       return <li {...attributes}>{children}</li>
     case 'numbered-list':
@@ -69,28 +72,6 @@ const Element = props => {
     default:
       return <p {...attributes}>{children}</p>
   }
-}
-
-const ImageElement = ({ attributes, children, element }) => {
-  const selected = useSelected()
-  const focused = useFocused()
-  return (
-    <div {...attributes}>
-      <div contentEditable={false}>
-        <img
-          src={element.url}
-          className={css`
-            display: block;
-            max-width: 100%;
-            max-height: 20em;
-            box-shadow: ${selected && focused ? '0 0 0 3px #B4D5FF' : 'none'};
-          `}
-          alt={element.url}
-        />
-      </div>
-      {children}
-    </div>
-  )
 }
 
 const Leaf = ({ attributes, children, leaf }) => {
@@ -123,41 +104,5 @@ const initialValue = [
     children: [{ text: 'Try it out for yourself!' }],
   },
 ]
-
-
-const withImages = editor => {
-  const { insertData, isVoid } = editor
-
-  editor.isVoid = element => {
-    return element.type === 'image' ? true : isVoid(element)
-  }
-
-  editor.insertData = data => {
-    const text = data.getData('text/plain')
-    const { files } = data
-
-    if (files && files.length > 0) {
-      for (const file of files) {
-        const reader = new FileReader()
-        const [mime] = file.type.split('/')
-
-        if (mime === 'image') {
-          reader.addEventListener('load', () => {
-            const url = reader.result
-            insertImage(editor, url)
-          })
-
-          reader.readAsDataURL(file)
-        }
-      }
-    } else if (isImageUrl(text)) {
-      insertImage(editor, text)
-    } else {
-      insertData(data)
-    }
-  }
-
-  return editor
-}
 
 export default TextEditor;
