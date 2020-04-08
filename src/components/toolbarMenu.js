@@ -4,6 +4,7 @@ import { useSlate } from 'slate-react'
 import { Button, Icon, Toolbar } from './editorComponent'
 import { toggleBlock, toggleMark, isBlockActive, isMarkActive } from '../scripts/EditorHelper'
 import { insertImage } from '../plugins/image'
+import { insertEmbedUrl } from '../plugins/embeds'
 
 
 export const ToolbarMenu = () => {
@@ -19,6 +20,7 @@ export const ToolbarMenu = () => {
       <BlockButton format="numbered-list" icon="format_list_numbered" />
       <BlockButton format="bulleted-list" icon="format_list_bulleted" />
       <ImageButton format="image" icon="image" />
+      <EmbedButton format="video" icon="play_circle_outline" />
     </Toolbar>
   )
 }
@@ -63,6 +65,23 @@ const ImageButton = ({ format, icon }) => {
         const url = window.prompt('Enter the URL of the image:')
         if (!url) return
         insertImage(editor, url)
+      }}
+    >
+      <Icon>{icon}</Icon>
+    </Button>
+  )
+}
+
+const EmbedButton = ({ format, icon }) => {
+  const editor = useSlate()
+  return (
+    <Button
+      active={isMarkActive(editor, format)}
+      onMouseDown={event => {
+        event.preventDefault()
+        const url = window.prompt('Enter the URL of the video:')
+        if (!url) return
+        insertEmbedUrl(editor, url)
       }}
     >
       <Icon>{icon}</Icon>
