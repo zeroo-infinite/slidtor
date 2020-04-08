@@ -1,4 +1,5 @@
 import { Editor, Transforms } from 'slate'
+import isHotkey from 'is-hotkey'
 
 // Define our own custom set of helpers.
 
@@ -44,3 +45,34 @@ export const isMarkActive = (editor, format) => {
   const marks = Editor.marks(editor)
   return marks ? marks[format] === true : false
 }
+
+export const onKeyDown = (event, editor) => {
+  Object.keys(HOTKEYS).some(key => {
+    if (isHotkey(key, event)) {
+      event.preventDefault()
+      HOTKEYS[key](event, editor);
+      return true;
+    }
+    return false;
+  });
+}
+
+export const HOTKEYS = {
+  'mod+b': (editor) => toggleMark(editor, 'bold'),
+  'mod+i': (editor) => toggleMark(editor, 'italic'),
+  'mod+u': (editor) => toggleMark(editor, 'underline'),
+  'mod+`': (editor) => toggleMark(editor, 'code'),
+  "enter": (event, editor) => onReturnKeyDown(event, editor),
+}
+
+const onReturnKeyDown = (event, editor) => {
+  // if (isBlockActive(editor, "image"))
+  insertNewParagraph(editor);
+};
+
+const insertNewParagraph = editor => {
+  Transforms.insertNodes(
+    editor,
+    { type: 'paragraph', children: [{ text: ""}] },
+  );
+};

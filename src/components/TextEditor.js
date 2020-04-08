@@ -1,26 +1,19 @@
 import React, { useCallback, useMemo, useState } from 'react'
-import isHotkey from 'is-hotkey'
 import { Editable, withReact, Slate } from 'slate-react'
 import { createEditor } from 'slate'
 import { withHistory } from 'slate-history'
 
 import { ToolbarMenu } from './toolbarMenu'
-import { toggleMark } from '../scripts/EditorHelper'
+import { onKeyDown } from '../scripts/EditorHelper'
 import { withImages, ImageNode } from '../plugins/image'
-
-const HOTKEYS = {
-  'mod+b': 'bold',
-  'mod+i': 'italic',
-  'mod+u': 'underline',
-  'mod+`': 'code',
-}
+import { withEmbeds, VideoElement } from '../plugins/embeds'
 
 const TextEditor = () => {
   const [value, setValue] = useState(initialValue)
   const renderElement = useCallback(props => <Element {...props} />, [])
   const renderLeaf = useCallback(props => <Leaf {...props} />, [])
   const editor = useMemo(
-    () => withImages(withHistory(withReact(createEditor()))), 
+    () => withEmbeds(withImages(withHistory(withReact(createEditor())))), 
     []
   )
 
@@ -35,21 +28,11 @@ const TextEditor = () => {
         placeholder="Enter some rich text…"
         spellCheck
         autoFocus
-        onKeyDown={event => {
-          for (const hotkey in HOTKEYS) {
-            if (isHotkey(hotkey, event)) {
-              event.preventDefault()
-              const mark = HOTKEYS[hotkey]
-              toggleMark(editor, mark)
-            }
-          }
-        }}
+        onKeyDown={event => onKeyDown(event, editor) }
       />
     </Slate>
   )
 }
-
-
 
 const Element = props => {
   const { attributes, children, element } = props;
@@ -69,6 +52,8 @@ const Element = props => {
       return <li {...attributes}>{children}</li>
     case 'numbered-list':
       return <ol {...attributes}>{children}</ol>
+    case 'video':
+      return <VideoElement {...props} />
     default:
       return <p {...attributes}>{children}</p>
   }
@@ -98,6 +83,11 @@ const initialValue = [
   {
     type: 'heading-one',
     children: [{ text: 'A wise quote.' }],
+  },
+    {
+    type: 'video',
+    url: 'https://player.vimeo.com/video/26689853',
+    children: [{ text: '' }],
   },
   {
     type: 'paragraph',
