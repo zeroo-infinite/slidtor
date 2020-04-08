@@ -1,3 +1,6 @@
+# Slidtor
+This is a project to make text editor using [Slate](https://github.com/ianstormtaylor/slate).
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
