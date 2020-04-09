@@ -47,6 +47,10 @@ export const isMarkActive = (editor, format) => {
 }
 
 export const onKeyDown = (event, editor) => {
+  if (isEnter(event)) {
+    onReturnKeyDown(event, editor)
+    return true;
+  }
   Object.keys(HOTKEYS).some(key => {
     if (isHotkey(key, event)) {
       event.preventDefault()
@@ -62,12 +66,14 @@ export const HOTKEYS = {
   'mod+i': (editor) => toggleMark(editor, 'italic'),
   'mod+u': (editor) => toggleMark(editor, 'underline'),
   'mod+`': (editor) => toggleMark(editor, 'code'),
-  "enter": (event, editor) => onReturnKeyDown(event, editor),
+}
+const isEnter = (event) => {
+  return event.key.toLocaleLowerCase() === 'enter'
 }
 
 const onReturnKeyDown = (event, editor) => {
-  // if (isBlockActive(editor, "image"))
-  insertNewParagraph(editor);
+  if (isBlockActive(editor, "image"))
+    insertNewParagraph(editor);
 };
 
 const insertNewParagraph = editor => {
