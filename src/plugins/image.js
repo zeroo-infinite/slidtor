@@ -75,13 +75,6 @@ const ImageNode = ({ attributes, children, element }) => {
           alt={element.url}
         />
         <figcaption>
-        <UrlInput
-            caption={caption || 'ok'}
-            onChange={val => {
-              const path = ReactEditor.findPath(editor, element)
-              Transforms.setNodes(editor, { caption: val }, { at: path })
-            }}
-          />
         </figcaption>
         {children}
       </figure>

@@ -13,7 +13,7 @@ const TextEditor = () => {
   const renderElement = useCallback(props => <Element {...props} />, [])
   const renderLeaf = useCallback(props => <Leaf {...props} />, [])
   const editor = useMemo(
-    () => withEmbeds(withImages(withHistory(withReact(createEditor())))), 
+    () => withImages(withEmbeds(withHistory(withReact(createEditor())))), 
     []
   )
 
