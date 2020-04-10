@@ -8,8 +8,8 @@ import { onKeyDown } from '../scripts/EditorHelper'
 import { withImages, ImageNode } from '../plugins/image'
 import { withEmbeds, VideoElement } from '../plugins/embeds'
 
-const TextEditor = () => {
-  const [value, setValue] = useState(initialValue)
+const TextEditor = (props) => {
+  const [value, setValue] = useState(props.value)
   const renderElement = useCallback(props => <Element {...props} />, [])
   const renderLeaf = useCallback(props => <Leaf {...props} />, [])
   const editor = useMemo(
@@ -17,8 +17,14 @@ const TextEditor = () => {
     []
   )
 
+  const onValueChange = value => {
+    setValue(value);
+    if (props.onValueChange)
+      props.onValueChange(value);
+  }
+
   return (
-    <Slate editor={editor} value={value} onChange={value => setValue(value)}>
+    <Slate editor={editor} value={value} onChange={onValueChange}>
 
       <ToolbarMenu />
 
@@ -28,7 +34,7 @@ const TextEditor = () => {
         placeholder="Enter some rich text…"
         spellCheck
         autoFocus
-        onKeyDown={event => onKeyDown(event, editor) }
+        onKeyDown={(event,  change, next) => onKeyDown(event, editor, change, next) }
       />
     </Slate>
   )
@@ -78,21 +84,5 @@ const Leaf = ({ attributes, children, leaf }) => {
 
   return <span {...attributes}>{children}</span>
 }
-
-const initialValue = [
-  {
-    type: 'heading-one',
-    children: [{ text: 'A wise quote.' }],
-  },
-    {
-    type: 'video',
-    url: 'https://player.vimeo.com/video/26689853',
-    children: [{ text: '' }],
-  },
-  {
-    type: 'paragraph',
-    children: [{ text: 'Try it out for yourself!' }],
-  },
-]
 
 export default TextEditor;
