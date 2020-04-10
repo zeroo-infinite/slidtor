@@ -38,9 +38,10 @@
 }
 
 .toolbar{
-  color: #dddddd !important;
+  color: #dddddd;
+  border: solid 1px #dddddd !important;
+  padding: 10px 0px !important;
 }
-
 /* img { */
   /* vertical-align: top;  */
   /* vertical-align: text-top; */
