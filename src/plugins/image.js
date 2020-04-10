@@ -1,6 +1,6 @@
 import React from 'react'
 import { Transforms } from 'slate'
-import { ReactEditor, useSelected, useFocused, useEditor } from 'slate-react'
+import { useSelected, useFocused } from 'slate-react'
 import { css } from 'emotion'
 import imageExtensions from 'image-extensions'
 import isUrl from 'is-url'
@@ -10,9 +10,6 @@ const insertImage = (editor, url) => {
   const image = { type: 'image', url, children: [text],  isVoid: true }
   
   Transforms.insertNodes(editor, image)
-  // Editor.insertBreak(editor)
-  // editor.insertBreak()
-  // editor.insertText('Hello')
 }
 
 const isImageUrl = url => {
@@ -61,8 +58,6 @@ const withImages = editor => {
 const ImageNode = ({ attributes, children, element }) => {
   const selected = useSelected()
   const focused = useFocused()
-  const editor = useEditor()
-  const { caption } = element
 
   return (
     <div {...attributes}>
@@ -75,37 +70,10 @@ const ImageNode = ({ attributes, children, element }) => {
           alt={element.url}
         />
         <figcaption>
-        <UrlInput
-            caption={caption || 'ok'}
-            onChange={val => {
-              const path = ReactEditor.findPath(editor, element)
-              Transforms.setNodes(editor, { caption: val }, { at: path })
-            }}
-          />
         </figcaption>
         {children}
       </figure>
     </div>
-  )
-}
-
-const UrlInput = ({ caption, onChange }) => {
-  const [value, setValue] = React.useState(caption)
-  return (
-    <input
-      value={value}
-      placeholder="caption"
-      onClick={e => e.stopPropagation()}
-      style={{
-        marginTop: '5px',
-        boxSizing: 'border-box',
-      }}
-      onChange={e => {
-        const newCaption = e.target.value
-        setValue({caption: newCaption})
-        onChange({caption: newCaption})
-      }}
-    />
   )
 }
 
