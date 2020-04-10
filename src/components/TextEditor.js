@@ -7,15 +7,20 @@ import { ToolbarMenu } from './toolbarMenu'
 import { onKeyDown } from '../scripts/EditorHelper'
 import { withImages, ImageNode } from '../plugins/image'
 import { withEmbeds, VideoElement } from '../plugins/embeds'
+import { withLinks } from '../plugins/link'
 
 const TextEditor = (props) => {
   const [value, setValue] = useState(props.value)
   const renderElement = useCallback(props => <Element {...props} />, [])
   const renderLeaf = useCallback(props => <Leaf {...props} />, [])
-  const editor = useMemo(
-    () => withImages(withEmbeds(withHistory(withReact(createEditor())))), 
-    []
-  )
+  const withAllPlugins = editor => {
+    [withImages, withEmbeds, withLinks].forEach(plugin => {
+      if (typeof plugin == 'function') plugin(editor);
+    });
+  
+    return editor;
+  };
+  const editor = useMemo(() => withAllPlugins(withHistory(withReact(createEditor()))), []);
 
   const onValueChange = value => {
     setValue(value);
@@ -60,6 +65,12 @@ const Element = props => {
       return <ol {...attributes}>{children}</ol>
     case 'video':
       return <VideoElement {...props} />
+    case 'link':
+      return (
+        <a {...attributes} href={element.url}>
+          {children}
+        </a>
+      )
     default:
       return <p {...attributes}>{children}</p>
   }
