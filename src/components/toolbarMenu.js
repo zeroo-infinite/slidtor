@@ -5,6 +5,7 @@ import { Button, Icon, Toolbar } from './editorComponent'
 import { toggleBlock, toggleMark, isBlockActive, isMarkActive } from '../scripts/EditorHelper'
 import { insertImage } from '../plugins/image'
 import { insertEmbedUrl } from '../plugins/embeds'
+import { isLinkActive, insertLink} from '../plugins/link'
 
 
 export const ToolbarMenu = () => {
@@ -21,6 +22,7 @@ export const ToolbarMenu = () => {
       <BlockButton format="bulleted-list" icon="format_list_bulleted" />
       <ImageButton format="image" icon="image" />
       <EmbedButton format="video" icon="play_circle_outline" />
+      <LinkButton format='link' icon="link" />
     </Toolbar>
   )
 }
@@ -85,6 +87,23 @@ const EmbedButton = ({ format, icon }) => {
       }}
     >
       <Icon>{icon}</Icon>
+    </Button>
+  )
+}
+
+const LinkButton = ({ format, icon}) => {
+  const editor = useSlate()
+  return (
+    <Button
+      active={isLinkActive(editor)}
+      onMouseDown={event => {
+        event.preventDefault()
+        const url = window.prompt('Enter the URL of the link:')
+        if (!url) return
+        insertLink(editor, url)
+      }}
+    >
+      <Icon> {icon} </Icon>
     </Button>
   )
 }
