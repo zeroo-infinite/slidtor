@@ -1,9 +1,7 @@
 import React from 'react'
 import { Transforms } from 'slate'
-import {
-  useEditor,
-  ReactEditor,
-} from 'slate-react'
+import { useSelected, useFocused } from 'slate-react'
+import { css } from 'emotion'
 
 
 const insertEmbedUrl = (editor, url) => {
@@ -18,20 +16,25 @@ const withEmbeds = editor => {
 }
 
 const VideoElement = ({ attributes, children, element }) => {
-  const editor = useEditor()
+  const selected = useSelected()
+  const focused = useFocused()
   const { url } = element
   return (
     <div {...attributes}>
       <div contentEditable={false}>
         <div
           style={{
-            padding: '75% 0 0 0',
+            padding: '65% 0 0 0',
             position: 'relative',
           }}
+          className={css`
+            box-shadow: ${selected && focused ? '0 0 0 3px #B4D5FF' : 'none'};
+          `}
         >
           <iframe
             src={`${url}?title=0&byline=0&portrait=0`}
             frameBorder="0"
+            title={url}
             style={{
               position: 'absolute',
               top: '0',
@@ -41,35 +44,10 @@ const VideoElement = ({ attributes, children, element }) => {
             }}
           />
         </div>
-        <UrlInput
-          url={url}
-          onChange={val => {
-            const path = ReactEditor.findPath(editor, element)
-            Transforms.setNodes(editor, { url: val }, { at: path })
-          }}
-        />
+
       </div>
       {children}
     </div>
-  )
-}
-
-const UrlInput = ({ url, onChange }) => {
-  const [value, setValue] = React.useState(url)
-  return (
-    <input
-      value={value}
-      onClick={e => e.stopPropagation()}
-      style={{
-        marginTop: '5px',
-        boxSizing: 'border-box',
-      }}
-      onChange={e => {
-        const newUrl = e.target.value
-        setValue(newUrl)
-        onChange(newUrl)
-      }}
-    />
   )
 }
 

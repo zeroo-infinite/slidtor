@@ -72,7 +72,7 @@ const isEnter = (event) => {
 }
 
 const onReturnKeyDown = (event, editor) => {
-  if (isBlockActive(editor, "image"))
+  if (isBlockActive(editor, "image") || isBlockActive(editor, "video"))
     insertNewParagraph(editor);
 };
 
