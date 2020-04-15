@@ -17,7 +17,7 @@ export default class Slidtor extends React.Component {
     this.forceUpdate();
   }
 
-  handleChange = value => {
+  handleChange(value) {
     this.setState({
       value
     });
