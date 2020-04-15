@@ -69,7 +69,7 @@ export default function(editor) {
   return (type, ...rest) => {
     command(type, editor)
   };
-}
+};
 
 
 export const onKeyDown = (event, editor) => {
@@ -79,6 +79,7 @@ export const onKeyDown = (event, editor) => {
       HOTKEYS[key](event, editor);
       return true;
     }
+    return false;
   });
   if (isEnter(event)) {
     onReturnKeyDown(event, editor)

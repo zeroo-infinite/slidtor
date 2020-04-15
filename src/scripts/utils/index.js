@@ -1,7 +1,4 @@
-import React from 'react';
 import { Editor } from 'slate'
-
-const LIST_TYPES = ['numbered-list', 'bulleted-list'];
 
 export const isBlock = (type) => {
   return ['block-quote', 'heading-one', 'bulleted-list', 'heading-one', 'heading-two',
@@ -33,5 +30,3 @@ export function isActive(editor, format) {
   }
   return false;
 }
-
-

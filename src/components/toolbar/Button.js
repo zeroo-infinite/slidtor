@@ -1,5 +1,4 @@
 import React, {useContext} from 'react';
-import { useSlate } from 'slate-react'
 import { Button as AntButton, Tooltip } from 'antd';
 import command from '../../commands'
 import * as utils from '../../scripts/utils'
