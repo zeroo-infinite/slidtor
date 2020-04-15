@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextEditor } from './components';
+import Slidtor from './Slidtor'
 import './App.css';
 import 'antd/dist/antd.css'
 
@@ -19,9 +19,10 @@ const App = () => {
 
   return (
     <div className="App">
-      <TextEditor
+      <Slidtor
         value={value}
-        onValueChange={onValueChange} />
+        tools={tools}
+        onChange={onValueChange} />
     </div>
   );
 };
@@ -50,6 +51,14 @@ const initialValue = [
       },
     ],
   },
+]
+
+const tools = [
+  ['bold', 'italic', 'underline', 'strikethrough'],
+  ['numberedlist', 'bulletedlist'],
+  ['h1','h2','h3'],
+  ['blockquote', 'code'],
+  ['link', 'image','embed'],
 ]
 
 export default App;
