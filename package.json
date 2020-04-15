@@ -1,7 +1,11 @@
 {
   "name": "slidtor",
-  "version": "0.1.0",
+  "version": "0.1.1",
+  "description": "Slate editor",
   "private": false,
+  "author": "zeroo-infinite",
+  "license": "MIT",
+  "main": "src/index.js",
   "dependencies": {
     "@ant-design/icons": "^4.0.6",
     "@testing-library/jest-dom": "^4.2.4",
