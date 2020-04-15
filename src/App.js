@@ -1,15 +1,7 @@
 import React, { useState } from 'react';
-import logo from './logo.svg';
 import { TextEditor } from './components';
 import './App.css';
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <TextEditor />
-//     </div>
-//   );
-// }
+import 'antd/dist/antd.css'
 
 const App = () => {
   // JSON.parse(localStorage.getItem('content')) || 
@@ -23,7 +15,6 @@ const App = () => {
   const saveInLocalStorage = value => {
     const content = JSON.stringify(value);
     localStorage.setItem('content', content);
-    console.log(content);
   }
 
   return (
@@ -37,17 +28,27 @@ const App = () => {
 
 const initialValue = [
   {
-    type: 'heading-one',
-    children: [{ text: 'A wise quote.' }],
-  },
-    {
-    type: 'video',
-    url: 'https://player.vimeo.com/video/26689853',
-    children: [{ text: '' }],
+    children: [
+      {
+        text: 'In addition to block nodes, you can create inline nodes, like ',
+      },
+      {
+        type: 'link',
+        url: 'https://en.wikipedia.org/wiki/Hypertext',
+        children: [{ text: 'hyperlinks' }],
+      },
+      {
+        text: '!',
+      },
+    ],
   },
   {
-    type: 'paragraph',
-    children: [{ text: 'Try it out for yourself!' }],
+    children: [
+      {
+        text:
+          'This example shows hyperlinks in action. It features two ways to add links. You can either add a link via the toolbar icon above, or if you want in on a little secret, copy a URL to your keyboard and paste it while a range of text is selected.',
+      },
+    ],
   },
 ]
 

@@ -1,3 +1,6 @@
+.App{
+  padding: 10px;
+}
 .toolbar{
   color: #dddddd;
   border: solid 1px #dddddd !important;

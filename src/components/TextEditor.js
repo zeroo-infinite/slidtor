@@ -3,18 +3,22 @@ import { Editable, withReact, Slate } from 'slate-react'
 import { createEditor } from 'slate'
 import { withHistory } from 'slate-history'
 
-import { ToolbarMenu } from './toolbarMenu'
-import { onKeyDown } from '../scripts/EditorHelper'
-import { withImages, ImageNode } from '../plugins/image'
-import { withEmbeds, VideoElement } from '../plugins/embeds'
+import { onKeyDown } from '../commands'
+import { withImages } from '../plugins/image'
+import { withEmbeds } from '../plugins/embeds'
 import { withLinks } from '../plugins/link'
+
+import Toolbar from './toolbar'
+import Element from './elements'
+import Leaf from './leafs'
 
 const TextEditor = (props) => {
   const [value, setValue] = useState(props.value)
+  const[selection, setSelection] = useState({})
   const renderElement = useCallback(props => <Element {...props} />, [])
   const renderLeaf = useCallback(props => <Leaf {...props} />, [])
   const withAllPlugins = editor => {
-    [withImages, withEmbeds, withLinks].forEach(plugin => {
+    [withLinks, withImages, withEmbeds].forEach(plugin => {
       if (typeof plugin == 'function') plugin(editor);
     });
   
@@ -24,76 +28,38 @@ const TextEditor = (props) => {
 
   const onValueChange = value => {
     setValue(value);
+    if(editor.selection && editor.selection !== null)
+      setSelection(editor.selection)
     if (props.onValueChange)
-      props.onValueChange(value);
+      props.onValueChange( value);
   }
 
   return (
-    <Slate editor={editor} value={value} onChange={onValueChange}>
-
-      <ToolbarMenu />
-
-      <Editable
-        renderElement={renderElement}
-        renderLeaf={renderLeaf}
-        placeholder="Enter some rich text…"
-        spellCheck
-        autoFocus
-        onKeyDown={(event,  change, next) => onKeyDown(event, editor, change, next) }
-      />
-    </Slate>
+    <div>
+      <Slate editor={editor} value={value} onChange={onValueChange}>
+        <Toolbar
+          editor={editor}
+          selection={selection}
+          tools={tools}
+        />
+        <Editable
+          renderElement={renderElement}
+          renderLeaf={renderLeaf}
+          placeholder="Enter some rich text…"
+          spellCheck
+          autoFocus
+          onKeyDown={(event,  change, next) => onKeyDown(event, editor, change, next) }
+        />
+      </Slate>
+    </div>
   )
 }
 
-const Element = props => {
-  const { attributes, children, element } = props;
-
-  switch (element.type) {
-    case 'block-quote':
-      return <blockquote {...attributes}>{children}</blockquote>
-    case 'bulleted-list':
-      return <ul {...attributes}>{children}</ul>
-    case 'heading-one':
-      return <h1 {...attributes}>{children}</h1>
-    case 'heading-two':
-      return <h2 {...attributes}>{children}</h2>
-    case 'image':
-      return <ImageNode {...props} />
-    case 'list-item':
-      return <li {...attributes}>{children}</li>
-    case 'numbered-list':
-      return <ol {...attributes}>{children}</ol>
-    case 'video':
-      return <VideoElement {...props} />
-    case 'link':
-      return (
-        <a {...attributes} href={element.url}>
-          {children}
-        </a>
-      )
-    default:
-      return <p {...attributes}>{children}</p>
-  }
-}
-
-const Leaf = ({ attributes, children, leaf }) => {
-  if (leaf.bold) {
-    children = <strong>{children}</strong>
-  }
-
-  if (leaf.code) {
-    children = <code>{children}</code>
-  }
-
-  if (leaf.italic) {
-    children = <em>{children}</em>
-  }
-
-  if (leaf.underline) {
-    children = <u>{children}</u>
-  }
-
-  return <span {...attributes}>{children}</span>
-}
+const tools = [
+  ['bold', 'italic', 'underline', 'strikethrough'],
+  ['numberedlist', 'bulletedlist'],
+  ['h1','h2','h3'],
+  ['link', 'image','embed'],
+];
 
 export default TextEditor;
