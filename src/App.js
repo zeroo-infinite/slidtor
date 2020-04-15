@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import logo from './logo.svg';
 import { TextEditor } from './components';
 import './App.css';
-
+import 'antd/dist/antd.css'
 // function App() {
 //   return (
 //     <div className="App">
