@@ -30,14 +30,3 @@ export default class Toolbar extends React.Component {
     );
   }
 }
-Toolbar.default = {
-  tools: [
-    ['bold', 'italic', 'underline', 'strikethrough'],
-    ['orderedlist', 'unorderedlist'],
-    ['Heading'],
-    ['Align'],
-    ['image', 'table', 'code'],
-    ['undo', 'redo'],
-    ['Fullscreen']
-  ]
-};

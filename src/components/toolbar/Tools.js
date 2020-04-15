@@ -14,7 +14,7 @@ export const numberedlist = () => <Button type="numbered-list" title="numbered l
 export const bulletedlist = () => (
   <Button type="bulleted-item" title="bulleted list" icon='unorderedlist'/>
 );
-
+export const blockquote = () => <Button type="block-quote" title="blockquote" plain=" '' "/>;
 export const code = () => <Button type="code" title="code" />;
 export const undo = () => <Button type="undo" title="undo" />;
 export const redo = () => <Button type="redo" title="redo" />;

@@ -36,16 +36,16 @@ const TextEditor = (props) => {
 
   return (
     <div>
-      <Slate editor={editor} value={value} onChange={onValueChange}>
+      <Slate editor={editor} value={value} onChange={onValueChange} >
         <Toolbar
           editor={editor}
           selection={selection}
-          tools={tools}
+          tools={props.tools}
         />
         <Editable
           renderElement={renderElement}
           renderLeaf={renderLeaf}
-          placeholder="Enter some rich text…"
+          placeholder={props.placeholder}
           spellCheck
           autoFocus
           onKeyDown={(event,  change, next) => onKeyDown(event, editor, change, next) }
@@ -54,12 +54,5 @@ const TextEditor = (props) => {
     </div>
   )
 }
-
-const tools = [
-  ['bold', 'italic', 'underline', 'strikethrough'],
-  ['numberedlist', 'bulletedlist'],
-  ['h1','h2','h3'],
-  ['link', 'image','embed'],
-];
 
 export default TextEditor;

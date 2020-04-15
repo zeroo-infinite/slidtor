@@ -6,7 +6,7 @@ export const isBlock = (type) => {
 }
 
 export const isMark = (type) => {
-  return ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'strikethrough'].includes(type);
+  return ['bold', 'code', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'strikethrough'].includes(type);
 }
 
 export const isBlockActive = (editor, format) => {
