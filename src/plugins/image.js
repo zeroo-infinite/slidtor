@@ -1,7 +1,4 @@
-import React from 'react'
 import { Transforms } from 'slate'
-import { useSelected, useFocused } from 'slate-react'
-import { css } from 'emotion'
 import imageExtensions from 'image-extensions'
 import isUrl from 'is-url'
 
@@ -55,26 +52,5 @@ const withImages = editor => {
   return editor
 }
 
-const ImageNode = ({ attributes, children, element }) => {
-  const selected = useSelected()
-  const focused = useFocused()
 
-  return (
-    <div {...attributes}>
-      <figure contentEditable={false}>
-        <img 
-          src={element.url}
-          className={css`
-            box-shadow: ${selected && focused ? '0 0 0 3px #B4D5FF' : 'none'};
-          `}
-          alt={element.url}
-        />
-        <figcaption>
-        </figcaption>
-        {children}
-      </figure>
-    </div>
-  )
-}
-
-export { insertImage, withImages, ImageNode }
+export {withImages }

@@ -29,10 +29,14 @@ const withLinks = editor => {
   return editor
 }
 
-const insertLink = (editor, url) => {
-  if (editor.selection) {
-    wrapLink(editor, url)
+const insertLink = (editor, selection, url, text) => {
+  if (editor.selection || selection) {
+    wrapLink(editor, url, text, selection)
   }
+}
+
+const removeLink = (editor) => {
+  unwrapLink(editor)
 }
 
 const isLinkActive = editor => {
@@ -44,25 +48,28 @@ const unwrapLink = editor => {
   Transforms.unwrapNodes(editor, { match: n => n.type === 'link' })
 }
 
-const wrapLink = (editor, url) => {
+const wrapLink = (editor, url, text=null, selection=null) => {
   if (isLinkActive(editor)) {
     unwrapLink(editor)
   }
 
-  const { selection } = editor
+  if (selection == null)
+    selection = editor.selection
+
   const isCollapsed = selection && Range.isCollapsed(selection)
+
   const link = {
     type: 'link',
-    url,
-    children: isCollapsed ? [{ text: url }] : [],
+    url: url,
+    children: isCollapsed ? [{ text: text||url }] : [],
   }
 
   if (isCollapsed) {
-    Transforms.insertNodes(editor, link)
+    Transforms.insertNodes(editor, link, {at: selection})
   } else {
     Transforms.wrapNodes(editor, link, { split: true })
     Transforms.collapse(editor, { edge: 'end' })
   }
 }
 
-export { isLinkActive, insertLink, withLinks };
+export { isLinkActive, insertLink, removeLink, withLinks };
