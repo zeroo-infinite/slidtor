@@ -7,12 +7,7 @@
   margin: 0 !important;
   padding: 10px 0px !important;
 }
-/* img { */
-  /* vertical-align: top;  */
-  /* vertical-align: text-top; */
-  /* vertical-align: -moz-middle-with-baseline; */
-  /* vertical-align: unset; */
-  /* vertical-align: initial */
-  /* float: left; */
-  /* float: right; */
-/* } */
+
+.toolbar-antd-cotnainer .ant-btn-group {
+  margin-right: 10px;
+}
