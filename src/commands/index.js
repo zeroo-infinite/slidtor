@@ -1,10 +1,9 @@
 import { Editor, Transforms } from 'slate'
 import isHotkey from 'is-hotkey'
-
-// Define our own custom set of helpers.
+import { isBlock, isMark } from '../scripts/utils'
 
 const LIST_TYPES = ['numbered-list', 'bulleted-list'];
-export const toggleBlock = (editor, format) => {
+const toggleBlock = (editor, format) => {
   const isActive = isBlockActive(editor, format)
   const isList = LIST_TYPES.includes(format)
 
@@ -23,7 +22,7 @@ export const toggleBlock = (editor, format) => {
   }
 }
 
-export const toggleMark = (editor, format) => {
+const toggleMark = (editor, format) => {
   const isActive = isMarkActive(editor, format)
 
   if (isActive) {
@@ -46,8 +45,34 @@ export const isMarkActive = (editor, format) => {
   return marks ? marks[format] === true : false
 }
 
-export const onKeyDown = (event, editor) => {
+export const insertImage = (editor, selection, url) => {
+  const text = { text: '' }
+  const image = { type: 'image', url, children: [text] }
+  Transforms.insertNodes(editor, image, {at: selection})
+}
 
+export const insertEmbed = (editor, selection, url) => {
+  const video = { type: 'video', url, children: [{ text: ''}] }
+  Transforms.insertNodes(editor, video, {at: selection})
+}
+
+const command = (type, editor) => {
+  if (isMark(type)) {
+    toggleMark(editor, type);
+  } 
+  if (isBlock(type))  {
+   toggleBlock(editor, type);
+  }
+}
+
+export default function(editor) {
+  return (type, ...rest) => {
+    command(type, editor)
+  };
+}
+
+
+export const onKeyDown = (event, editor) => {
   Object.keys(HOTKEYS).some(key => {
     if (isHotkey(key, event)) {
       event.preventDefault()
