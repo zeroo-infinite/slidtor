@@ -1,57 +1,58 @@
-import React, { useContext, useState } from 'react';
-import { Popover , Input} from 'antd';
-import {insertEmbed} from '../../commands'
+import React, { useContext, useState } from 'react'
+import { Popover, Input } from 'antd'
+import { insertEmbed } from '../../commands'
 
-import Button from './Button';
-import Context from './Context';
+import Button from './Button'
+import Context from './Context'
 
 const EmbedButton = (props) => {
-  const [visible, setVisible] = useState(false);
-  const [url, setUrl] = useState('');
-  const {editor} = useContext(Context)
+  const [visible, setVisible] = useState(false)
+  const [url, setUrl] = useState('')
+  const { editor } = useContext(Context)
 
   const hide = () => {
     setVisible(false)
-  };
+  }
 
-  const handleVisibleChange = visible => {
+  const handleVisibleChange = (visible) => {
     setVisible(visible)
-  };
-  
+  }
+
   const handleChange = (e) => {
-    setUrl(e.target.value);
+    setUrl(e.target.value)
   }
 
   const keyPress = (e) => {
-    if(e.keyCode === 13){
+    if (e.keyCode === 13) {
       insertEmbed(editor, props.selection, url)
-      setUrl('');
+      setUrl('')
       hide()
     }
   }
-  
+
   const content = (
     <div>
-      <Input size='small'
+      <Input
+        size="small"
         value={url}
         onKeyDown={keyPress}
         onChange={handleChange}
-        placeholder='embed url'></Input>
+        placeholder="embed url"></Input>
     </div>
   )
   return (
-    <Popover 
+    <Popover
       content={content}
       visible={visible}
       trigger="click"
-      onVisibleChange={handleVisibleChange}
-    >
-      <Button type='embed'
+      onVisibleChange={handleVisibleChange}>
+      <Button
+        type="embed"
         onMouseDown={() => handleVisibleChange(!visible)}
-        icon='video'
+        icon="video"
       />
     </Popover>
   )
-};
+}
 
-export default EmbedButton;
+export default EmbedButton

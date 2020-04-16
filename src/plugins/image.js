@@ -4,26 +4,26 @@ import isUrl from 'is-url'
 
 const insertImage = (editor, url) => {
   const text = { text: '' }
-  const image = { type: 'image', url, children: [text],  isVoid: true }
-  
+  const image = { type: 'image', url, children: [text], isVoid: true }
+
   Transforms.insertNodes(editor, image)
 }
 
-const isImageUrl = url => {
+const isImageUrl = (url) => {
   if (!url) return false
   if (!isUrl(url)) return false
   const ext = new URL(url).pathname.split('.').pop()
   return imageExtensions.includes(ext)
 }
 
-const withImages = editor => {
+const withImages = (editor) => {
   const { insertData, isVoid } = editor
 
-  editor.isVoid = element => {
+  editor.isVoid = (element) => {
     return element.type === 'image' ? true : isVoid(element)
   }
 
-  editor.insertData = data => {
+  editor.insertData = (data) => {
     const text = data.getData('text/plain')
     const { files } = data
 
@@ -47,10 +47,9 @@ const withImages = editor => {
       insertData(data)
     }
   }
-  
+
   editor.insertBreak()
   return editor
 }
 
-
-export {withImages }
+export { withImages }

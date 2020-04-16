@@ -17,19 +17,19 @@ const Leaf = ({ attributes, children, leaf }) => {
     children = <u>{children}</u>
   }
 
-  if(leaf.superscript) { 
+  if (leaf.superscript) {
     children = <sup>{children}</sup>
   }
 
-  if(leaf.subscript) {
+  if (leaf.subscript) {
     children = <sub>{children}</sub>
   }
 
-  if(leaf.strikethrough) {
+  if (leaf.strikethrough) {
     children = <del>{children}</del>
   }
 
   return <span {...attributes}>{children}</span>
 }
 
-export default Leaf;
+export default Leaf

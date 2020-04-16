@@ -1,17 +1,16 @@
-import React from 'react';
-
-import Button from './Button';
-import Context from './Context';
-import * as Tools from './Tools';
+import React from 'react'
+import Button from './Button'
+import Context from './Context'
+import * as Tools from './Tools'
 
 export default class Toolbar extends React.Component {
-  renderTool = name => {
-    const Tool = Tools[name];
-    return <Tool key={name} selection={this.props.selection}/>;
-  };
+  renderTool = (name) => {
+    const Tool = Tools[name]
+    return <Tool key={name} selection={this.props.selection} />
+  }
 
   render() {
-    const { value, editor, tools } = this.props;
+    const { value, editor, tools } = this.props
     return (
       <Context.Provider value={{ value, editor }}>
         <div className="toolbar-antd-cotnainer">
@@ -19,14 +18,14 @@ export default class Toolbar extends React.Component {
             if (Array.isArray(tool)) {
               return (
                 <Button.Group key={i}>
-                  {tool.map(name => this.renderTool(name))}
+                  {tool.map((name) => this.renderTool(name))}
                 </Button.Group>
-              );
+              )
             }
-            return this.renderTool(tool);
+            return this.renderTool(tool)
           })}
         </div>
       </Context.Provider>
-    );
+    )
   }
 }

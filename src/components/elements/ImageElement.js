@@ -2,7 +2,6 @@ import React from 'react'
 import { useSelected, useFocused } from 'slate-react'
 import { css } from 'emotion'
 
-
 const ImageElement = ({ attributes, children, element }) => {
   const selected = useSelected()
   const focused = useFocused()
@@ -10,7 +9,7 @@ const ImageElement = ({ attributes, children, element }) => {
   return (
     <div {...attributes}>
       <figure contentEditable={false}>
-        <img 
+        <img
           src={element.url}
           className={css`
             display: block;
@@ -20,12 +19,11 @@ const ImageElement = ({ attributes, children, element }) => {
           `}
           alt={element.url}
         />
-        <figcaption>
-        </figcaption>
+        <figcaption></figcaption>
         {children}
       </figure>
     </div>
   )
 }
 
-export default ImageElement;
+export default ImageElement

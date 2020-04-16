@@ -2,13 +2,13 @@ import { Editor, Transforms } from 'slate'
 import isHotkey from 'is-hotkey'
 import { isBlock, isMark } from '../scripts/utils'
 
-const LIST_TYPES = ['numbered-list', 'bulleted-list'];
+const LIST_TYPES = ['numbered-list', 'bulleted-list']
 const toggleBlock = (editor, format) => {
   const isActive = isBlockActive(editor, format)
   const isList = LIST_TYPES.includes(format)
 
   Transforms.unwrapNodes(editor, {
-    match: n => LIST_TYPES.includes(n.type),
+    match: (n) => LIST_TYPES.includes(n.type),
     split: true,
   })
 
@@ -34,7 +34,7 @@ const toggleMark = (editor, format) => {
 
 export const isBlockActive = (editor, format) => {
   const [match] = Editor.nodes(editor, {
-    match: n => n.type === format,
+    match: (n) => n.type === format,
   })
 
   return !!match
@@ -48,45 +48,41 @@ export const isMarkActive = (editor, format) => {
 export const insertImage = (editor, selection, url) => {
   const text = { text: '' }
   const image = { type: 'image', url, children: [text] }
-  Transforms.insertNodes(editor, image, {at: selection})
+  Transforms.insertNodes(editor, image, { at: selection })
 }
 
 export const insertEmbed = (editor, selection, url) => {
-  const video = { type: 'video', url, children: [{ text: ''}] }
-  Transforms.insertNodes(editor, video, {at: selection})
+  const video = { type: 'video', url, children: [{ text: '' }] }
+  Transforms.insertNodes(editor, video, { at: selection })
 }
 
 const command = (type, editor) => {
-  if (isMark(type)) {
-    toggleMark(editor, type);
-  } 
-  if (isBlock(type))  {
-   toggleBlock(editor, type);
+  if (isMark(type)) toggleMark(editor, type)
+  if (isBlock(type)) toggleBlock(editor, type)
+}
+
+export default function (editor) {
+  return (type, ...rest) => {
+    command(type, editor)
   }
 }
 
-export default function(editor) {
-  return (type, ...rest) => {
-    command(type, editor)
-  };
-};
-
-
 export const onKeyDown = (event, editor) => {
-  Object.keys(HOTKEYS).some(key => {
+  Object.keys(HOTKEYS).some((key) => {
     if (isHotkey(key, event)) {
       event.preventDefault()
-      HOTKEYS[key](event, editor);
-      return true;
+      HOTKEYS[key](event, editor)
+      return true
     }
-    return false;
-  });
+    return false
+  })
+
   if (isEnter(event)) {
     onReturnKeyDown(event, editor)
-    return true;
+    return true
   }
 
-  return false;
+  return false
 }
 
 export const HOTKEYS = {
@@ -94,28 +90,31 @@ export const HOTKEYS = {
   'mod+i': (editor) => toggleMark(editor, 'italic'),
   'mod+u': (editor) => toggleMark(editor, 'underline'),
   'mod+`': (editor) => toggleMark(editor, 'code'),
-  'shift+enter': (event, editor) => onShiftReturnKeyDown(event, editor)
+  'shift+enter': (event, editor) => onShiftReturnKeyDown(event, editor),
 }
 const isEnter = (event) => {
   return event.key.toLocaleLowerCase() === 'enter'
 }
 
 const onShiftReturnKeyDown = (event, editor) => {
-  event.preventDefault();
-  if (isBlockActive(editor, "code") || isBlockActive(editor, "image") || isBlockActive(editor, "video"))
-    insertNewParagraph(editor);
-  else
-    editor.insertText('\n')
-};
+  event.preventDefault()
+  if (
+    isBlockActive(editor, 'code') ||
+    isBlockActive(editor, 'image') ||
+    isBlockActive(editor, 'video')
+  )
+    insertNewParagraph(editor)
+  else editor.insertText('\n')
+}
 
 const onReturnKeyDown = (event, editor) => {
-  if (isBlockActive(editor, "image") || isBlockActive(editor, "video"))
-    insertNewParagraph(editor);
-};
+  if (isBlockActive(editor, 'image') || isBlockActive(editor, 'video'))
+    insertNewParagraph(editor)
+}
 
-const insertNewParagraph = editor => {
-  Transforms.insertNodes(
-    editor,
-    { type: 'paragraph', children: [{ text: ""}] },
-  );
-};
+const insertNewParagraph = (editor) => {
+  Transforms.insertNodes(editor, {
+    type: 'paragraph',
+    children: [{ text: '' }],
+  })
+}
