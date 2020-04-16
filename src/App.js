@@ -1,31 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import Slidtor from './Slidtor'
-import './App.css';
+import './App.css'
 import 'antd/dist/antd.css'
 
 const App = () => {
-  // JSON.parse(localStorage.getItem('content')) || 
-  const [value, setValue] = useState(initialValue);
+  // JSON.parse(localStorage.getItem('content')) ||
+  const [value, setValue] = useState(initialValue)
 
-  const onValueChange = value => {
-    setValue(value);
-    saveInLocalStorage(value);
-  };
+  const onChange = (value) => {
+    setValue(value)
+    saveInLocalStorage(value)
+  }
 
-  const saveInLocalStorage = value => {
-    const content = JSON.stringify(value);
-    localStorage.setItem('content', content);
+  const saveInLocalStorage = (value) => {
+    const content = JSON.stringify(value)
+    localStorage.setItem('content', content)
   }
 
   return (
     <div className="App">
-      <Slidtor
-        value={value}
-        tools={tools}
-        onChange={onValueChange} />
+      <Slidtor value={value} tools={tools} onChange={onChange} />
     </div>
-  );
-};
+  )
+}
 
 const initialValue = [
   {
@@ -56,9 +53,9 @@ const initialValue = [
 const tools = [
   ['bold', 'italic', 'underline', 'strikethrough'],
   ['numberedlist', 'bulletedlist'],
-  ['h1','h2','h3'],
+  ['h1', 'h2', 'h3'],
   ['blockquote', 'code'],
-  ['link', 'image','embed'],
+  ['link', 'image', 'embed'],
 ]
 
-export default App;
+export default App

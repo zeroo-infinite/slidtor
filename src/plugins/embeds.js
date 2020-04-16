@@ -1,5 +1,8 @@
-export const withEmbeds = editor => {
+export const withEmbeds = (editor) => {
   const { isVoid } = editor
-  editor.isVoid = element => (element.type === 'video' ? true : isVoid(element))
+
+  editor.isVoid = (element) =>
+    element.type === 'video' ? true : isVoid(element)
+
   return editor
 }

@@ -14,45 +14,43 @@ import Leaf from './leafs'
 
 const TextEditor = (props) => {
   const [value, setValue] = useState(props.value)
-  const[selection, setSelection] = useState({})
-  const renderElement = useCallback(props => <Element {...props} />, [])
-  const renderLeaf = useCallback(props => <Leaf {...props} />, [])
-  const withAllPlugins = editor => {
-    [withLinks, withImages, withEmbeds].forEach(plugin => {
-      if (typeof plugin == 'function') plugin(editor);
-    });
-  
-    return editor;
-  };
-  const editor = useMemo(() => withAllPlugins(withHistory(withReact(createEditor()))), []);
+  const [selection, setSelection] = useState({})
+  const renderElement = useCallback((props) => <Element {...props} />, [])
+  const renderLeaf = useCallback((props) => <Leaf {...props} />, [])
+  const withAllPlugins = (editor) => {
+    ;[withLinks, withImages, withEmbeds].forEach((plugin) => {
+      if (typeof plugin == 'function') plugin(editor)
+    })
+    return editor
+  }
+  const editor = useMemo(
+    () => withAllPlugins(withHistory(withReact(createEditor()))),
+    [],
+  )
 
-  const onValueChange = value => {
-    setValue(value);
-    if(editor.selection && editor.selection !== null)
+  const onValueChange = (value) => {
+    setValue(value)
+    if (editor.selection && editor.selection !== null)
       setSelection(editor.selection)
-    if (props.onValueChange)
-      props.onValueChange( value);
+
+    if (props.onChange) props.onChange(value)
   }
 
   return (
-    <div>
-      <Slate editor={editor} value={value} onChange={onValueChange} >
-        <Toolbar
-          editor={editor}
-          selection={selection}
-          tools={props.tools}
-        />
-        <Editable
-          renderElement={renderElement}
-          renderLeaf={renderLeaf}
-          placeholder={props.placeholder}
-          spellCheck
-          autoFocus
-          onKeyDown={(event,  change, next) => onKeyDown(event, editor, change, next) }
-        />
-      </Slate>
-    </div>
+    <Slate editor={editor} value={value} onChange={onValueChange}>
+      <Toolbar editor={editor} selection={selection} tools={props.tools} />
+      <Editable
+        renderElement={renderElement}
+        renderLeaf={renderLeaf}
+        placeholder={props.placeholder}
+        spellCheck
+        autoFocus
+        onKeyDown={(event, change, next) =>
+          onKeyDown(event, editor, change, next)
+        }
+      />
+    </Slate>
   )
 }
 
-export default TextEditor;
+export default TextEditor

@@ -16,8 +16,7 @@ const VideoElement = ({ attributes, children, element }) => {
           }}
           className={css`
             box-shadow: ${selected && focused ? '0 0 0 3px #B4D5FF' : 'none'};
-          `}
-        >
+          `}>
           <iframe
             src={`${url}?title=0&byline=0&portrait=0`}
             frameBorder="0"
@@ -31,11 +30,10 @@ const VideoElement = ({ attributes, children, element }) => {
             }}
           />
         </div>
-
       </div>
       {children}
     </div>
   )
 }
 
-export default VideoElement;
+export default VideoElement

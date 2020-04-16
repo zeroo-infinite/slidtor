@@ -1,9 +1,9 @@
-import React from 'react';
-import ImageElement from './ImageElement';
-import VideoElement from './VideoElement';
+import React from 'react'
+import ImageElement from './ImageElement'
+import VideoElement from './VideoElement'
 
-const Element = props => {
-  const { attributes, children, element } = props;
+const Element = (props) => {
+  const { attributes, children, element } = props
 
   switch (element.type) {
     case 'block-quote':
@@ -33,4 +33,4 @@ const Element = props => {
   }
 }
 
-export default Element;
+export default Element

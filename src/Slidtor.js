@@ -1,32 +1,30 @@
-import React from 'react';
-import { TextEditor } from './components';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { TextEditor } from './components'
 import 'antd/dist/antd.css'
 
-
-export default class Slidtor extends React.Component {
+class Slidtor extends React.Component {
   constructor(props) {
-    super(props);
-    this.editor = React.createRef();
-    this.ref = React.createRef();
+    super(props)
+    this.editor = React.createRef()
+    this.ref = React.createRef()
     this.state = {
-      value: props.value
+      value: props.value,
     }
   }
 
   componentDidMount() {
-    this.forceUpdate();
+    this.forceUpdate()
   }
 
-  handleChange(value) {
-    this.setState({
-      value
-    });
-    this.props.onChange(value);
-  };
+  handleChange = (value) => {
+    this.setState({ value })
+    if (this.props.onChange) this.props.onChange(value)
+  }
 
   render() {
-    const { placeholder, tools } = this.props;
-    const { value } = this.state;
+    const { placeholder, tools } = this.props
+    const { value } = this.state
 
     return (
       <div className="slidtor-container">
@@ -34,10 +32,18 @@ export default class Slidtor extends React.Component {
           value={value}
           placeholder={placeholder}
           tools={tools}
-          onChange={this.handleChange} />
+          onChange={this.handleChange}
+        />
       </div>
     )
   }
+}
+
+Slidtor.propTypes = {
+  placeholder: PropTypes.string,
+  tools: PropTypes.array,
+  onChange: PropTypes.func,
+  value: PropTypes.array,
 }
 
 Slidtor.defaultProps = {
@@ -45,7 +51,9 @@ Slidtor.defaultProps = {
   tools: [
     ['bold', 'italic', 'underline', 'strikethrough'],
     ['numberedlist', 'bulletedlist'],
-    ['h1','h2','h3'],
-    ['link', 'image','embed'],
-  ]
+    ['h1', 'h2', 'h3'],
+    ['link', 'image', 'embed'],
+  ],
 }
+
+export default Slidtor
