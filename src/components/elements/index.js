@@ -28,6 +28,30 @@ const Element = (props) => {
           {children}
         </a>
       )
+    case 'align-left':
+      return (
+        <div className="align-left" {...attributes}>
+          {children}
+        </div>
+      )
+    case 'align-center':
+      return (
+        <div className="align-center" {...attributes}>
+          {children}
+        </div>
+      )
+    case 'align-right':
+      return (
+        <div className="align-right" {...attributes}>
+          {children}
+        </div>
+      )
+    case 'align-justify':
+      return (
+        <div className="align-justify" {...attributes}>
+          {children}
+        </div>
+      )
     default:
       return <p {...attributes}>{children}</p>
   }
