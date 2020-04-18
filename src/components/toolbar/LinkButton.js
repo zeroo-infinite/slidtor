@@ -1,14 +1,14 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { Node } from 'slate'
+import { useSlate } from 'slate-react'
 import { Popover, Input } from 'antd'
 import isUrl from 'is-url'
 import { isLinkActive, insertLink, removeLink } from '../../plugins/link'
 
 import Button from './Button'
-import Context from './Context'
 
 const LinkButton = (props) => {
-  const { editor } = useContext(Context)
+  const editor = useSlate()
   const [visible, setVisible] = useState(false)
   const [url, setUrl] = useState('')
   const [text, setText] = useState('')

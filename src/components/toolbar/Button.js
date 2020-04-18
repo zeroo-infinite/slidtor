@@ -1,15 +1,14 @@
-import React, { useContext } from 'react'
+import React from 'react'
+import { useSlate } from 'slate-react'
 import { Button as AntButton, Tooltip } from 'antd'
 import command from '../../commands'
 import * as utils from '../../scripts/utils'
 
 import Icon from './Icon'
-import Context from './Context'
 
 const Button = React.forwardRef(({ ...props }, ref) => {
   const { type, title, icon, plain, onMouseDown } = props
-  // const editor = useSlate()
-  const { editor } = useContext(Context)
+  const editor = useSlate()
 
   const handleMouseDown = (event) => {
     event.preventDefault()
@@ -37,6 +36,6 @@ const Button = React.forwardRef(({ ...props }, ref) => {
   )
 })
 Button.Group = AntButton.Group
-Button.contextType = Context
+// Button.contextType = Context
 
 export default Button

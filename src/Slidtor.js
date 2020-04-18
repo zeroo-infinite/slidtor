@@ -2,12 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { TextEditor } from './components'
 import 'antd/dist/antd.css'
+import './index.css'
 
 class Slidtor extends React.Component {
   constructor(props) {
     super(props)
-    this.editor = React.createRef()
-    this.ref = React.createRef()
+    // this.editor = React.createRef()
+    this.wrapper = React.createRef()
     this.state = {
       value: props.value,
     }
@@ -27,7 +28,7 @@ class Slidtor extends React.Component {
     const { value } = this.state
 
     return (
-      <div className="slidtor-container">
+      <div ref={this.wrapper} className="slidtor-container">
         <TextEditor
           value={value}
           placeholder={placeholder}

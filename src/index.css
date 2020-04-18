@@ -87,3 +87,14 @@ input:focus {
 [data-slate-editor] > * + * {
   margin-top: 1em;
 }
+
+.toolbar{
+  color: #dddddd;
+  border: solid 1px #dddddd !important;
+  margin: 0 !important;
+  padding: 10px 0px !important;
+}
+
+.toolbar-cotnainer .ant-btn-group {
+  margin-right: 10px;
+}

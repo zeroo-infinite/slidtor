@@ -1,14 +1,14 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
+import { useSlate } from 'slate-react'
 import { Popover, Input } from 'antd'
 import { insertEmbed } from '../../commands'
 
 import Button from './Button'
-import Context from './Context'
 
 const EmbedButton = (props) => {
   const [visible, setVisible] = useState(false)
   const [url, setUrl] = useState('')
-  const { editor } = useContext(Context)
+  const editor = useSlate()
 
   const hide = () => {
     setVisible(false)
