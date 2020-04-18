@@ -11,6 +11,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 import React from "react";
 import Slidtor from "slidtor";
+import "slidtor/build/index.css";
 
 const initialValue = [
   {
