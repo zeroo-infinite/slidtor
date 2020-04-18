@@ -31,6 +31,16 @@ export const h2 = () => (
 export const h3 = () => (
   <Button type="heading-three" title="heading three" plain="h3" />
 )
+export const alignleft = () => <Button type="align-left" title="align left" />
+export const aligncenter = () => (
+  <Button type="align-center" title="align center" />
+)
+export const alignright = () => (
+  <Button type="align-right" title="align right" />
+)
+export const alignjustify = () => (
+  <Button type="align-justify" title="align justify" icon="menu" />
+)
 
 export const image = (props) => <ImageButton selection={props.selection} />
 export const embed = (props) => <EmbedButton selection={props.selection} />
