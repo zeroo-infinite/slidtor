@@ -9,6 +9,10 @@ export const isBlock = (type) => {
     'heading-two',
     'numbered-list',
     'link',
+    'align-left',
+    'align-center',
+    'align-right',
+    'align-justify',
   ].includes(type)
 }
 

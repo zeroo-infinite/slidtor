@@ -55,10 +55,9 @@ blockquote {
 }
 
 blockquote[dir='rtl'] {
-  border-left: none;
-  padding-left: 0;
-  padding-right: 10px;
-  border-right: 2px solid #ddd;
+  border-left: 3px solid #dfe2e5;
+  color: #6a737d;
+  padding: 0 1em;
 }
 
 table {
@@ -86,6 +85,19 @@ input:focus {
 
 [data-slate-editor] > * + * {
   margin-top: 1em;
+}
+
+.align-left {
+  text-align: left;
+}
+.align-right {
+  text-align: right;
+}
+.align-center {
+  text-align: center;
+}
+.align-justify {
+  text-align: justify;
 }
 
 .toolbar{
