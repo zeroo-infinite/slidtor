@@ -3,6 +3,7 @@ import Button from './Button'
 import ImageButton from './ImageButton'
 import EmbedButton from './EmbedButton'
 import LinkButton from './LinkButton'
+import TableButton from './TableButton'
 
 export const bold = () => <Button type="bold" title="bold" />
 export const italic = () => <Button type="italic" title="italic" />
@@ -45,3 +46,4 @@ export const alignjustify = () => (
 export const image = (props) => <ImageButton selection={props.selection} />
 export const embed = (props) => <EmbedButton selection={props.selection} />
 export const link = (props) => <LinkButton selection={props.selection} />
+export const table = (props) => <TableButton selection={props.selection} />

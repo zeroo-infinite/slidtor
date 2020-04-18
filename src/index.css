@@ -110,3 +110,30 @@ input:focus {
 .toolbar-cotnainer .ant-btn-group {
   margin-right: 10px;
 }
+
+.tool-table-container {
+  display: inline;
+  position: relative;
+}
+
+.table-picker {
+  background: #fff;
+}
+.table-picker  td {
+  width: 6px;
+  min-width: 6px;
+  height: 6px;
+  padding: 6px;
+  border: 1px solid #d9d9d9;
+  cursor: pointer;
+}
+.table-picker td.active {
+  border-color: #008dfe;
+}
+.table-picker .table-picker-footer {
+  background: #f2f5f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #008dfe;
+}

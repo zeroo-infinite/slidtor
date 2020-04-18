@@ -7,6 +7,7 @@ import { onKeyDown } from '../commands'
 import { withImages } from '../plugins/image'
 import { withEmbeds } from '../plugins/embeds'
 import { withLinks } from '../plugins/link'
+import { withTables } from '../plugins/table'
 
 import Toolbar from './toolbar'
 import Element from './elements'
@@ -18,7 +19,7 @@ const TextEditor = (props) => {
   const renderElement = useCallback((props) => <Element {...props} />, [])
   const renderLeaf = useCallback((props) => <Leaf {...props} />, [])
   const withAllPlugins = (editor) => {
-    ;[withLinks, withImages, withEmbeds].forEach((plugin) => {
+    ;[withTables, withLinks, withImages, withEmbeds].forEach((plugin) => {
       if (typeof plugin == 'function') plugin(editor)
     })
     return editor
