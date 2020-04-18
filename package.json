@@ -12,7 +12,8 @@
   "files": [
     "*.md",
     "build",
-    "src/index.css"
+    "src/index.css",
+    "*.json"
   ],
   "sideEffects": [
     "*.css"
