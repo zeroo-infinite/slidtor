@@ -54,7 +54,7 @@ const tools = [
   ['bold', 'italic', 'underline', 'strikethrough'],
   ['numberedlist', 'bulletedlist'],
   ['h1', 'h2', 'h3'],
-  ['blockquote', 'code'],
+  ['blockquote', 'code', 'table'],
   ['alignleft', 'aligncenter', 'alignright', 'alignjustify'],
   ['link', 'image', 'embed'],
 ]
