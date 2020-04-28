@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useSlate } from 'slate-react'
 import { Popover, Input } from 'antd'
+import { css } from 'emotion'
 import { insertImage } from '../../commands'
 
 import Button from './Button'
@@ -35,6 +36,9 @@ const ImageButton = (props) => {
       <Input
         size="small"
         value={url}
+        className={css`
+          width: 16rem;
+        `}
         onKeyDown={keyPress}
         onChange={handleChange}
         placeholder="image url"></Input>
