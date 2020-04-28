@@ -1,4 +1,4 @@
-import { Editor, Transforms } from 'slate'
+import { Editor, Transforms, Node } from 'slate'
 import isHotkey from 'is-hotkey'
 import { isBlock, isMark } from '../scripts/utils'
 
@@ -78,7 +78,7 @@ export const onKeyDown = (event, editor) => {
   })
 
   if (isEnter(event)) {
-    onReturnKeyDown(event, editor)
+    onReturnKeyDown(editor)
     return true
   }
 
@@ -107,9 +107,29 @@ const onShiftReturnKeyDown = (event, editor) => {
   else editor.insertText('\n')
 }
 
-const onReturnKeyDown = (event, editor) => {
+const onReturnKeyDown = (editor) => {
+  // If image or video
   if (isBlockActive(editor, 'image') || isBlockActive(editor, 'video'))
     insertNewParagraph(editor)
+
+  const { selection } = editor
+  const path = Editor.path(editor, selection)
+  const node = Node.get(editor, path)
+
+  // if list
+  const [list_type] = Editor.nodes(editor, {
+    match: (n) => LIST_TYPES.includes(n.type),
+  })
+  if (list_type && node.text === '') {
+    Transforms.unwrapNodes(editor, {
+      match: (n) => LIST_TYPES.includes(n.type),
+      split: true,
+    })
+    Transforms.setNodes(editor, {
+      type: 'paragraph',
+      at: selection,
+    })
+  }
 }
 
 const insertNewParagraph = (editor) => {
