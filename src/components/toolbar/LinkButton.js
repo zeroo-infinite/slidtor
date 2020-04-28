@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Node } from 'slate'
 import { useSlate } from 'slate-react'
 import { Popover, Input } from 'antd'
+import { css } from 'emotion'
 import isUrl from 'is-url'
 import { isLinkActive, insertLink, removeLink } from '../../plugins/link'
 
@@ -47,7 +48,10 @@ const LinkButton = (props) => {
   }
 
   const content = (
-    <div>
+    <div
+      className={css`
+        width: 16rem;
+      `}>
       <Input
         size="small"
         type="url"
@@ -55,6 +59,8 @@ const LinkButton = (props) => {
         onKeyDown={keyPress}
         onChange={handleLinkChange}
         placeholder="link"></Input>
+      <br />
+      <br />
       <Input
         size="small"
         type="text"

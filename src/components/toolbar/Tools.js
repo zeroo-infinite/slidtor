@@ -14,7 +14,7 @@ export const numberedlist = () => (
   <Button type="numbered-list" title="numbered list" icon="orderedlist" />
 )
 export const bulletedlist = () => (
-  <Button type="bulleted-item" title="bulleted list" icon="unorderedlist" />
+  <Button type="bulleted-list" title="bulleted list" icon="unorderedlist" />
 )
 export const blockquote = () => (
   <Button type="block-quote" title="blockquote" plain=" '' " />
@@ -23,13 +23,13 @@ export const code = () => <Button type="code" title="code" />
 export const undo = () => <Button type="undo" title="undo" />
 export const redo = () => <Button type="redo" title="redo" />
 export const h1 = () => (
-  <Button type="heading-one" title="heading one" plain="h1" />
+  <Button type="heading-one" title="heading one" plain="H1" />
 )
 export const h2 = () => (
-  <Button type="heading-two" title="heading two" plain="h2" />
+  <Button type="heading-two" title="heading two" plain="H2" />
 )
 export const h3 = () => (
-  <Button type="heading-three" title="heading three" plain="h3" />
+  <Button type="heading-three" title="heading three" plain="H3" />
 )
 export const alignleft = () => <Button type="align-left" title="align left" />
 export const aligncenter = () => (
