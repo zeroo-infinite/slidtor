@@ -38,7 +38,7 @@ const TextEditor = (props) => {
 
   return (
     <Slate editor={editor} value={value} onChange={onValueChange}>
-      <Toolbar editor={editor} selection={selection} tools={props.tools} />
+      <Toolbar selection={selection} tools={props.tools} />
       <Editable
         renderElement={renderElement}
         renderLeaf={renderLeaf}
